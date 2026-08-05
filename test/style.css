@@ -1,0 +1,67 @@
+body {
+
+    font-family: Arial, sans-serif;
+
+    background: #f5f5f5;
+
+    margin: 30px;
+
+}
+
+h1 {
+
+    text-align: center;
+
+}
+
+#gallery {
+
+    max-width: 800px;
+
+    margin: auto;
+
+}
+
+.card {
+
+    background: white;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    margin-bottom: 20px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.card img {
+
+    width: 100%;
+
+    border-radius: 10px;
+
+}
+
+.info {
+
+    margin-top: 15px;
+
+    line-height: 1.8;
+
+}
+
+.editBtn {
+
+    margin-top: 15px;
+
+    padding: 8px 16px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+}

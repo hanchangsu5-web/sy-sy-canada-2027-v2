@@ -112,3 +112,93 @@ PROJECT.md
 
 google-mymaps-links.md
 - Google My Maps 링크 관리
+
+## 2026-08-05 작업 내용
+
+### EXIF 정보 추출 기능 구현
+- exifr(full.umd.js) 적용
+- 휴대폰 원본 사진에서 EXIF 정보 읽기 성공
+- 촬영시간(DateTimeOriginal) 저장
+- GPS 위도(latitude) 저장
+- GPS 경도(longitude) 저장
+
+※ 카카오톡, 캡처본 등 EXIF가 제거된 사진은 촬영시간/GPS를 읽을 수 없음.
+
+---
+
+### Firestore 저장 항목 추가
+
+photos 컬렉션 저장 구조
+
+- family
+- memo
+- photoUrl
+- fileName
+- takenAt
+- latitude
+- longitude
+- placeName
+- createdAt
+
+---
+
+### 갤러리 기능 개선
+
+사진 카드에 표시
+
+- 작성자
+- 메모
+- 촬영일시
+
+촬영일시는
+
+YYYY.MM.DD HH:mm
+
+형식으로 표시.
+
+---
+
+### 지도 보기 기능
+
+GPS가 존재하는 사진은
+
+'📍 지도보기'
+
+버튼을 통해
+
+Google Maps 좌표 화면으로 이동 가능.
+
+GPS가 없는 사진은 버튼이 표시되지 않음.
+
+---
+
+### 대표 장소 자동 생성
+
+GPS 좌표를 이용하여
+
+Reverse Geocoding API로 대표 장소(placeName)를 자동 저장.
+
+현재는 도시(city) 기준으로 저장되며,
+
+세부 관광지까지 표시되지 않는 경우가 있음.
+
+예)
+탄중아루 해변
+→ 코타키나발루
+
+이 부분은 향후 개선 예정.
+
+---
+
+### 확인 완료
+
+- 사진 업로드
+- Firebase Storage 저장
+- Firestore 저장
+- EXIF 촬영시간 저장
+- GPS 저장
+- 지도보기
+- 대표 장소 자동 저장
+- 메모 수정
+
+모두 정상 동작 확인.
