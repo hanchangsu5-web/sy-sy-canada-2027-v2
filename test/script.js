@@ -1,9 +1,14 @@
-import { db } from "../firebase.js";
+import { db, storage } from "../firebase.js";
 
 import {
     collection,
     addDoc
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+import {
+    ref,
+    uploadBytes
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-storage.js";
 
 const status = document.getElementById("status");
 
@@ -36,3 +41,38 @@ async function saveTest() {
 }
 
 saveTest();
+
+const photo = document.getElementById("photo");
+const uploadBtn = document.getElementById("uploadBtn");
+
+uploadBtn.addEventListener("click", async () => {
+
+    if (photo.files.length === 0) {
+
+        alert("사진을 선택하세요.");
+
+        return;
+
+    }
+
+    const file = photo.files[0];
+
+    const storageRef = ref(storage, "test/" + file.name);
+
+    try {
+
+        await uploadBytes(storageRef, file);
+
+        alert("사진 업로드 성공!");
+
+        console.log("업로드 완료 :", file.name);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("업로드 실패!");
+
+    }
+
+});
