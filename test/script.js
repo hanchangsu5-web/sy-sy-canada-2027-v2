@@ -46,7 +46,38 @@ saveTest();
 const photo = document.getElementById("photo");
 const uploadBtn = document.getElementById("uploadBtn");
 const preview = document.getElementById("preview");
+// =========================
+// 📷 사진 선택 즉시 미리보기
+// =========================
+
+photo.addEventListener("change", () => {
+
+    if (photo.files.length === 0) {
+
+        preview.style.display = "none";
+
+        return;
+
+    }
+
+    preview.src = URL.createObjectURL(photo.files[0]);
+
+    preview.style.display = "block";
+
+});
 const family = document.getElementById("family");
+// =========================
+// 👤 작성자 자동 기억
+// =========================
+
+// 마지막으로 선택한 작성자 불러오기
+const savedFamily = localStorage.getItem("family");
+
+if (savedFamily) {
+
+    family.value = savedFamily;
+
+}
 const memo = document.getElementById("memo");
 const photoUrl = document.getElementById("photoUrl");
 
@@ -133,6 +164,8 @@ console.log("사진 URL :", url);
 console.log("family :", family.value);
 console.log("memo :", memo.value);
 
+// 선택한 작성자를 기억한다.
+localStorage.setItem("family", family.value);
 await addDoc(collection(db, "photos"), {
 
     family: family.value,
@@ -143,6 +176,8 @@ await addDoc(collection(db, "photos"), {
     latitude: tags["GPSLatitude"]?.description || "",
     longitude: tags["GPSLongitude"]?.description || "",
     location: location,
+
+    favorites: 0,
 
     createdAt: new Date()
 

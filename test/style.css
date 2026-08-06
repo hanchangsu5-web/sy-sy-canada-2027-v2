@@ -101,6 +101,8 @@ h1 {
 
     z-index: 9999;
 
+    touch-action: none;
+
 }
 
 #modalImage {
@@ -110,6 +112,12 @@ h1 {
     max-height: 100vh;
 
     object-fit: contain;
+
+    transform: scale(1);
+
+    transition: transform 0.15s ease;
+
+    touch-action: none;
 
 }
 
@@ -146,5 +154,265 @@ h1 {
 .card img:hover {
 
     transform: scale(1.03);
+
+}
+
+#viewerBottom {
+
+    position: absolute;
+
+    bottom: 30px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    background: rgba(0,0,0,.45);
+
+    padding: 10px 20px;
+
+    border-radius: 25px;
+
+}
+
+#photoCount {
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+}
+
+#likeBtn {
+
+    background: none;
+
+    border: none;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    color: white;
+
+}
+
+/* =========================
+   📷 사진 메뉴
+========================= */
+
+.menu {
+
+    max-width: 400px;
+
+    margin: 40px auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+}
+
+.menu button {
+
+    padding: 20px;
+
+    font-size: 22px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: white;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+.menu button:hover {
+
+    transform: translateY(-2px);
+
+}
+
+.menu button:active {
+
+    transform: scale(0.98);
+
+}
+
+/* =========================
+   📤 사진 업로드
+========================= */
+
+.upload-container {
+
+    max-width: 450px;
+
+    margin: 30px auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+}
+
+.upload-container label {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #333;
+
+}
+
+.upload-container input[type="file"] {
+
+    padding: 10px;
+
+    background: white;
+
+    border-radius: 10px;
+
+    border: 1px solid #ddd;
+
+}
+
+.upload-container select {
+
+    padding: 12px;
+
+    font-size: 17px;
+
+    border-radius: 10px;
+
+    border: 1px solid #ddd;
+
+}
+
+.upload-container textarea {
+
+    padding: 12px;
+
+    font-size: 16px;
+
+    border-radius: 10px;
+
+    border: 1px solid #ddd;
+
+    resize: vertical;
+
+}
+
+.upload-container button {
+
+    padding: 15px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #4CAF50;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+.upload-container button:hover {
+
+    background: #43A047;
+
+}
+
+.upload-container button:active {
+
+    transform: scale(0.98);
+
+}
+
+#preview {
+
+    width: 100%;
+
+    border-radius: 12px;
+
+    display: none;
+
+    object-fit: cover;
+
+}
+
+/* =========================
+   📖 큰 사진 정보
+========================= */
+
+#photoInfo {
+
+    position: absolute;
+
+    bottom: 95px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 90%;
+
+    max-width: 500px;
+
+    color: white;
+
+    text-align: left;
+
+    line-height: 1.7;
+
+    font-size: 16px;
+
+}
+
+#photoLocation,
+#photoDate,
+#photoFamily {
+
+    margin-bottom: 6px;
+
+    font-weight: bold;
+
+}
+
+#photoMemo {
+
+    margin-top: 15px;
+
+    white-space: pre-wrap;
+
+    font-size: 17px;
+
+    line-height: 1.8;
 
 }

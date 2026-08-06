@@ -47,9 +47,6 @@ let currentIndex = 0;
 // =========================
 
 let scale = 1;
-let startDistance = 0;
-
-let isPinching = false;
 
 // =========================
 // 📅 날짜 표시 형식 변경
@@ -163,12 +160,8 @@ gallery.addEventListener("click", async (event) => {
 
 function showPhoto() {
 
-    scale = 1;
-
-    modalImage.style.transform = "scale(1)";
-
     modalImage.src = photoList[currentIndex].photoUrl;
-    
+
     document.getElementById("photoCount").textContent =
         `${currentIndex + 1} / ${photoList.length}`;
 
@@ -214,15 +207,9 @@ let startY = 0;
 
 const modalImage = document.getElementById("modalImage");
 
+let startDistance = 0;
+
 modalImage.addEventListener("touchstart", (event) => {
-
-    if (isPinching) {
-
-    isPinching = false;
-
-    return;
-
-}
 
     // 한 손가락(스와이프)
     if (event.touches.length === 1) {
@@ -233,8 +220,6 @@ modalImage.addEventListener("touchstart", (event) => {
 
     // 두 손가락(핀치)
     if (event.touches.length === 2) {
-
-        isPinching = true;
 
         const dx =
             event.touches[0].clientX -
@@ -250,50 +235,7 @@ modalImage.addEventListener("touchstart", (event) => {
 
 });
 
-// =========================
-// 🔍 핀치 줌
-// =========================
-
-modalImage.addEventListener("touchmove", (event) => {
-
-    if (!isPinching) return;
-
-    if (event.touches.length !== 2) return;
-
-    event.preventDefault();
-
-    const dx =
-        event.touches[0].clientX -
-        event.touches[1].clientX;
-
-    const dy =
-        event.touches[0].clientY -
-        event.touches[1].clientY;
-
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    scale *= distance / startDistance;
-
-    // 최소 1배, 최대 4배
-    scale = Math.max(1, Math.min(scale, 4));
-
-    modalImage.style.transform = `scale(${scale})`;
-
-    startDistance = distance;
-
-});
-
 modalImage.addEventListener("touchend", (event) => {
-
-    if (isPinching) {
-
-        isPinching = false;
-
-        return;
-
-    }
-
-    if (scale > 1) return;
 
     const endY = event.changedTouches[0].clientY;
 

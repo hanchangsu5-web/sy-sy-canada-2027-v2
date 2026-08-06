@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>사진 업로드</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <h1>📤 사진 업로드</h1>
+
+    <div class="upload-container">
+
+        <label for="photo">
+            📷 사진 선택
+        </label>
+
+        <input
+            type="file"
+            id="photo"
+            accept="image/*">
+
+        <img
+            id="preview"
+            style="display:none;">
+
+        <label for="family">
+            👤 작성자
+        </label>
+
+        <select id="family">
+
+            <option value="창수">창수</option>
+            <option value="아내">숙정</option>
+            <option value="처제">영삼</option>
+            <option value="형부">순정</option>
+            <option value="조카1">세영</option>
+            <option value="조카2">서윤</option>
+
+        </select>
+
+        <label for="memo">
+            📝 여행이야기
+        </label>
+
+        <textarea
+            id="memo"
+            rows="5"
+            placeholder="메모를 입력하세요. (선택사항)">
+        </textarea>
+
+        <button id="uploadBtn">
+            📤 업로드
+        </button>
+
+        <!-- 기존 script.js에서 사용하는 요소 -->
+        <div
+            id="photoUrl"
+            style="display:none;">
+        </div>
+
+        <p
+            id="status"
+            style="display:none;">
+        </p>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/exifreader/dist/exif-reader.min.js"></script>
+
+    <script
+        type="module"
+        src="script.js">
+    </script>
+
+</body>
+
+</html>

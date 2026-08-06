@@ -2,61 +2,70 @@
 <html lang="ko">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firebase 테스트</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>사진</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-    <h1>🔥 Firebase 테스트 페이지</h1>
+    <h1>📷 사진</h1>
 
-    <p id="status">연결 확인 중...</p>
+    <div class="menu">
 
-    <script type="module" src="script.js"></script>
+    <button id="uploadBtn">
+        📤 사진 업로드
+    </button>
 
-    <input type="file" id="photo">
+    <button id="galleryBtn">
+        🖼️ 여행 갤러리
+    </button>
 
-<br><br>
+    <button id="favoriteBtn">
+        ❤️ 다시 보고 싶은 사진
+    </button>
 
-<label>작성자</label>
-<br>
+    <button id="storyBtn">
+        📖 여행 이야기
+    </button>
 
-<input
-    type="text"
-    id="family"
-    placeholder="예: 창수">
+    </div>
 
-<br><br>
+    <script>
 
-<label>메모</label>
-<br>
+    document
+        .getElementById("uploadBtn")
+        .onclick = () => {
 
-<textarea
-    id="memo"
-    rows="4"
-    cols="40"
-    placeholder="메모를 입력하세요"></textarea>
+            location.href = "upload.html";
 
-<br><br>
+        };
 
-<button id="uploadBtn">
-    사진 업로드
-</button>
+    document
+        .getElementById("galleryBtn")
+        .onclick = () => {
 
-<br><br>
+            location.href = "gallery.html";
 
-<img
-    id="preview"
-    width="300"
-    style="display:none; border-radius:10px;">
+        };
 
-<p id="photoUrl"></p>
+    document
+        .getElementById("favoriteBtn")
+        .onclick = () => {
 
-<script src="https://cdn.jsdelivr.net/npm/exifreader/dist/exif-reader.min.js"></script>
-<script type="module" src="script.js"></script>
+            location.href = "favorite.html";
+
+        };
+
+</script>
 
 </body>
+
 </html>
