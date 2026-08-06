@@ -51,15 +51,18 @@ if (photoDate !== currentDate) {
     currentDate = photoDate;
 
     gallery.innerHTML += `
-        <h2 class="date-title">
-            📅 ${currentDate}
-        </h2>
-    `;
+    <h2 class="date-title">
+        📅 ${currentDate}
+    </h2>
+
+    <div class="photo-grid" id="grid-${currentDate}">
+    </div>
+`;
 
 }
 
-    gallery.innerHTML += `
-        <div class="card">
+    document.getElementById(`grid-${currentDate}`).innerHTML += `
+    <div class="card">
     <img src="${photo.photoUrl}" class="photo">
 </div>
 
@@ -81,6 +84,8 @@ gallery.addEventListener("click", async (event) => {
     currentIndex = Array.from(photos).indexOf(event.target);
 
     document.getElementById("photoModal").style.display = "flex";
+
+    document.body.style.overflow = "hidden";
 
     document.getElementById("modalImage").src = event.target.src;
 
@@ -125,6 +130,8 @@ closeModal.addEventListener("click", () => {
 
     modal.style.display = "none";
 
+    document.body.style.overflow = "auto";
+
 });
 
 let startY = 0;
@@ -143,16 +150,28 @@ modalImage.addEventListener("touchend", (event) => {
 
     const distance = startY - endY;
 
-    if (distance > 50) {
+   if (distance > 50) {
 
-        alert("⬆ 다음 사진");
+    if (currentIndex < photoList.length - 1) {
+
+        currentIndex++;
+
+        modalImage.src = photoList[currentIndex].photoUrl;
+
+    }
+
+}
+
+else if (distance < -50) {
+
+    if (currentIndex > 0) {
+
+        currentIndex--;
+
+        modalImage.src = photoList[currentIndex].photoUrl;
 
     }
 
-    else if (distance < -50) {
-
-        alert("⬇ 이전 사진");
-
-    }
+}
 
 });
