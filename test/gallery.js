@@ -43,13 +43,26 @@ let photoList = [];
 let currentIndex = 0;
 
 // =========================
-// 🔍 핀치 줌
+// 🔍 Photo Viewer Engine
 // =========================
 
+// 확대 배율
 let scale = 1;
+
+// 확대 위치
+let translateX = 0;
+let translateY = 0;
+
+// 핀치 시작 거리
 let startDistance = 0;
 
+// 드래그 시작 위치
+let startX = 0;
+let startY = 0;
+
+// 현재 상태
 let isPinching = false;
+let isDragging = false;
 
 // =========================
 // 📅 날짜 표시 형식 변경
@@ -163,9 +176,13 @@ gallery.addEventListener("click", async (event) => {
 
 function showPhoto() {
 
+    // 사진이 바뀌면 확대와 위치 초기화
     scale = 1;
+    translateX = 0;
+    translateY = 0;
 
-    modalImage.style.transform = "scale(1)";
+    modalImage.style.transform =
+        `translate(0px, 0px) scale(1)`;
 
     modalImage.src = photoList[currentIndex].photoUrl;
     
@@ -210,26 +227,34 @@ closeModal.addEventListener("click", () => {
 // 위/아래 스와이프로 사진 이동
 // =========================
 
-let startY = 0;
+let swipeStartY = 0;
 
 const modalImage = document.getElementById("modalImage");
 
+let lastTap = 0;
+
 modalImage.addEventListener("touchstart", (event) => {
 
-    if (isPinching) {
+    
+    // 한 손가락
+if (event.touches.length === 1) {
 
-    isPinching = false;
+    swipeStartY = event.touches[0].clientY;
 
-    return;
+    // 확대 상태에서는 드래그 시작
+    if (scale > 1) {
 
-}
+        isDragging = true;
 
-    // 한 손가락(스와이프)
-    if (event.touches.length === 1) {
+        startX =
+            event.touches[0].clientX - translateX;
 
-        startY = event.touches[0].clientY;
+        startY =
+            event.touches[0].clientY - translateY;
 
     }
+
+}
 
     // 두 손가락(핀치)
     if (event.touches.length === 2) {
@@ -256,6 +281,22 @@ modalImage.addEventListener("touchstart", (event) => {
 
 modalImage.addEventListener("touchmove", (event) => {
 
+        // 확대 상태에서는 드래그
+    if (isDragging && event.touches.length === 1) {
+
+        translateX =
+            event.touches[0].clientX - startX;
+
+        translateY =
+            event.touches[0].clientY - startY;
+
+        modalImage.style.transform =
+            `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+        return;
+
+    }
+
     if (!isPinching) return;
 
     if (event.touches.length !== 2) return;
@@ -277,13 +318,21 @@ modalImage.addEventListener("touchmove", (event) => {
     // 최소 1배, 최대 4배
     scale = Math.max(1, Math.min(scale, 4));
 
-    modalImage.style.transform = `scale(${scale})`;
+    modalImage.style.transform =
+    `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 
     startDistance = distance;
 
 });
 
 modalImage.addEventListener("touchend", (event) => {
+
+    // 드래그 종료
+if (isDragging) {
+
+    isDragging = false;
+
+}
 
     if (isPinching) {
 
@@ -293,11 +342,39 @@ modalImage.addEventListener("touchend", (event) => {
 
     }
 
+    // 더블탭
+    const now = Date.now();
+
+    if (now - lastTap < 300) {
+
+        if (scale > 1) {
+
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+
+        } else {
+
+            scale = 2;
+
+        }
+
+        modalImage.style.transform =
+            `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+        lastTap = 0;
+
+        return;
+
+    }
+
+    lastTap = now;
+
     if (scale > 1) return;
 
     const endY = event.changedTouches[0].clientY;
 
-    const distance = startY - endY;
+    const distance = swipeStartY - endY;
 
    if (distance > 50) {
 

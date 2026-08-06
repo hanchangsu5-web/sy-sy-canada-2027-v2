@@ -149,3 +149,25 @@ V2
 
 - PWA 전환
 - PDF 여행앨범 생성
+
+## 2026-08-07
+
+### Photo Viewer Engine v1 완료
+
+gallery.js
+- Swipe
+- Pinch Zoom
+- Pan
+- Double Tap
+- Preload
+- 확대 중 스와이프 방지
+
+favorite.js
+- Swipe
+- Pinch Zoom
+- Pan
+- Double Tap
+- 확대 중 스와이프 방지
+
+※ 빠른 확대/축소 시 간헐적인 화면 튐 현상 확인.
+Photo Viewer Engine v2 최적화 단계에서 개선 예정.

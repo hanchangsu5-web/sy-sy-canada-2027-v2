@@ -16,6 +16,34 @@ let photoList = [];
 
 let currentIndex = 0;
 
+// =========================
+// 🔍 Photo Viewer Engine
+// =========================
+
+// 확대 배율
+let scale = 1;
+
+// 확대 위치
+let translateX = 0;
+let translateY = 0;
+
+// 핀치 시작 거리
+let startDistance = 0;
+
+// 드래그 시작 위치
+let startX = 0;
+let startY = 0;
+
+// 스와이프 시작 위치
+let swipeStartY = 0;
+
+// 현재 상태
+let isPinching = false;
+let isDragging = false;
+
+// 더블탭
+let lastTap = 0;
+
 // 내가 다시 보고 싶은 사진 목록
 let favoritePhotos =
     JSON.parse(localStorage.getItem("favoritePhotos")) || [];
@@ -114,21 +142,149 @@ loadFavoritePhotos();
 // ↕️ 스와이프
 // =========================
 
-let startY = 0;
-
 modalImage.addEventListener("touchstart", (event) => {
 
-    startY = event.touches[0].clientY;
+    // 한 손가락
+    if (event.touches.length === 1) {
+
+        swipeStartY = event.touches[0].clientY;
+
+        // 확대 상태에서는 드래그 시작
+        if (scale > 1) {
+
+            isDragging = true;
+
+            startX =
+                event.touches[0].clientX - translateX;
+
+            startY =
+                event.touches[0].clientY - translateY;
+
+        }
+
+    }
+
+    // 두 손가락(핀치)
+    if (event.touches.length === 2) {
+
+        isPinching = true;
+
+        const dx =
+            event.touches[0].clientX -
+            event.touches[1].clientX;
+
+        const dy =
+            event.touches[0].clientY -
+            event.touches[1].clientY;
+
+        startDistance = Math.sqrt(dx * dx + dy * dy);
+
+    }
+
+});
+
+// =========================
+// 🔍 핀치 줌
+// =========================
+
+modalImage.addEventListener("touchmove", (event) => {
+
+    // 확대 상태에서는 드래그
+    if (isDragging && event.touches.length === 1) {
+
+        translateX =
+            event.touches[0].clientX - startX;
+
+        translateY =
+            event.touches[0].clientY - startY;
+
+        modalImage.style.transform =
+            `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+        return;
+
+    }
+
+    if (!isPinching) return;
+
+    if (event.touches.length !== 2) return;
+
+    event.preventDefault();
+
+    const dx =
+        event.touches[0].clientX -
+        event.touches[1].clientX;
+
+    const dy =
+        event.touches[0].clientY -
+        event.touches[1].clientY;
+
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    scale *= distance / startDistance;
+
+    // 최소 1배, 최대 4배
+    scale = Math.max(1, Math.min(scale, 4));
+
+    modalImage.style.transform =
+        `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+    startDistance = distance;
 
 });
 
 modalImage.addEventListener("touchend", (event) => {
 
-    console.log("touchend");
+    // 드래그 종료
+    if (isDragging) {
+
+        isDragging = false;
+
+    }
+
+    // 핀치 종료
+    if (isPinching) {
+
+        isPinching = false;
+
+        return;
+
+    }
+
+    // 더블탭
+    const now = Date.now();
+
+    if (now - lastTap < 300) {
+
+        if (scale > 1) {
+
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+
+        } else {
+
+            scale = 2;
+
+        }
+
+        modalImage.style.transform =
+            `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+        lastTap = 0;
+
+        return;
+
+    }
+
+    lastTap = now;
+
+    // 확대 중에는 스와이프 금지
+    if (scale > 1) return;
 
     const endY = event.changedTouches[0].clientY;
 
-    const distance = startY - endY;
+    const distance = swipeStartY - endY;
 
     if (distance > 50) {
 
