@@ -119,6 +119,8 @@ h1 {
 
     touch-action: none;
 
+   /* will-change: transform; */
+
 }
 
 #closeModal {

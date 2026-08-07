@@ -34,6 +34,9 @@ let startDistance = 0;
 let startX = 0;
 let startY = 0;
 
+// 현재 드래그 거리
+let dragY = 0;
+
 // 스와이프 시작 위치
 let swipeStartY = 0;
 
@@ -59,28 +62,45 @@ const closeModal = document.getElementById("closeModal");
 
 function showPhoto() {
 
+    // 뷰어 상태 초기화
+    dragY = 0;
+    translateX = 0;
+    translateY = 0;
+
+    modalImage.style.transition = "none";
+    modalImage.style.transform = "translateY(0px) scale(1)";
+
+    // 사진이 바뀌면 확대와 위치 초기화
+    scale = 1;
+    translateX = 0;
+    translateY = 0;
+
+    modalImage.style.transform =
+        `translate(0px, 0px) scale(1)`;
+
     modalImage.src = photoList[currentIndex].photoUrl;
 
     photoCount.textContent =
         `${currentIndex + 1} / ${photoList.length}`;
 
-   // 다음 사진 미리 불러오기
-if (currentIndex < photoList.length - 1) {
+    // 다음 사진 미리 불러오기
+    if (currentIndex < photoList.length - 1) {
 
-    const nextImage = new Image();
+        const nextImage = new Image();
 
-    nextImage.src = photoList[currentIndex + 1].photoUrl;
+        nextImage.src = photoList[currentIndex + 1].photoUrl;
 
-}
+    }
 
-// 이전 사진 미리 불러오기
-if (currentIndex > 0) {
+    // 이전 사진 미리 불러오기
+    if (currentIndex > 0) {
 
-    const prevImage = new Image();
+        const prevImage = new Image();
 
-    prevImage.src = photoList[currentIndex - 1].photoUrl;
+        prevImage.src = photoList[currentIndex - 1].photoUrl;
 
-}
+    }
+
 }
 
 // =========================
@@ -189,6 +209,18 @@ modalImage.addEventListener("touchstart", (event) => {
 
 modalImage.addEventListener("touchmove", (event) => {
 
+    // 일반 스와이프(1배 상태)
+if (!isDragging && scale === 1 && event.touches.length === 1) {
+
+    dragY = event.touches[0].clientY - swipeStartY;
+
+    modalImage.style.transform =
+        `translateY(${dragY}px)`;
+
+    return;
+
+}
+
     // 확대 상태에서는 드래그
     if (isDragging && event.touches.length === 1) {
 
@@ -236,13 +268,12 @@ modalImage.addEventListener("touchmove", (event) => {
 modalImage.addEventListener("touchend", (event) => {
 
     // 드래그 종료
-    if (isDragging) {
+if (isDragging) {
 
-        isDragging = false;
+    isDragging = false;
 
-    }
+}
 
-    // 핀치 종료
     if (isPinching) {
 
         isPinching = false;
@@ -252,21 +283,31 @@ modalImage.addEventListener("touchend", (event) => {
     }
 
     // 더블탭
+    // 더블탭 위치
+    let tapX = event.changedTouches[0].clientX;
+    let tapY = event.changedTouches[0].clientY;
+
     const now = Date.now();
 
     if (now - lastTap < 300) {
 
         if (scale > 1) {
 
-            scale = 1;
-            translateX = 0;
-            translateY = 0;
+    scale = 1;
+    translateX = 0;
+    translateY = 0;
 
-        } else {
+} else {
 
-            scale = 2;
+    scale = 2;
 
-        }
+    translateX =
+        window.innerWidth / 2 - tapX;
+
+    translateY =
+        window.innerHeight / 2 - tapY;
+
+}
 
         modalImage.style.transform =
             `translate(${translateX}px, ${translateY}px) scale(${scale})`;
@@ -279,36 +320,76 @@ modalImage.addEventListener("touchend", (event) => {
 
     lastTap = now;
 
-    // 확대 중에는 스와이프 금지
     if (scale > 1) return;
 
-    const endY = event.changedTouches[0].clientY;
+    // 충분히 밀었는지 확인
+if (Math.abs(dragY) > 120) {
 
-    const distance = swipeStartY - endY;
+    // 위로 넘김
+    if (dragY < 0) {
 
-    if (distance > 50) {
+        modalImage.style.transition =
+            "transform 0.25s ease";
+
+        modalImage.style.transform =
+            "translateY(-100vh)";
+
+    }
+
+    // 아래로 넘김
+    else {
+
+        modalImage.style.transition =
+            "transform 0.25s ease";
+
+        modalImage.style.transform =
+            "translateY(100vh)";
+
+    }
+
+    return;
+
+}
+
+// 원래 자리로 복귀
+modalImage.style.transition =
+    "transform 0.2s ease";
+
+modalImage.style.transform =
+    "translateY(0px)";
+
+return;
+   
+});
+
+// =========================
+// 🎬 슬라이드 종료
+// =========================
+
+modalImage.addEventListener("transitionend", () => {
+
+    // 화면 밖으로 나간 경우만
+    if (Math.abs(dragY) <= 120) return;
+
+    if (dragY < 0) {
 
         if (currentIndex < photoList.length - 1) {
 
             currentIndex++;
 
-            showPhoto();
-
         }
 
-    }
-
-    else if (distance < -50) {
+    } else {
 
         if (currentIndex > 0) {
 
             currentIndex--;
 
-            showPhoto();
-
         }
 
     }
+
+    showPhoto();
 
 });
 

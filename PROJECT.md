@@ -171,3 +171,14 @@ favorite.js
 
 ※ 빠른 확대/축소 시 간헐적인 화면 튐 현상 확인.
 Photo Viewer Engine v2 최적화 단계에서 개선 예정.
+
+
+## Performance v1 예정
+
+- 갤러리 진입 속도 개선
+- 사진 뷰어 애니메이션 최적화
+- requestAnimationFrame 적용
+- GPU(transform3d) 적용
+- Lazy Loading
+- 뒤로가기 반응속도 개선
+- 즐겨찾기 반응속도 개선
