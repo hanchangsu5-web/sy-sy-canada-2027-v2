@@ -15,6 +15,24 @@
  */
 
 import { getState, setPhotos } from "./state.js";
+import { db, storage } from "../firebase.js";
+
+import {
+    collection,
+    getDocs,
+    updateDoc,
+    deleteDoc,
+    doc,
+    setDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    deleteObject
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
 
 /**
  * Photo 객체 생성
@@ -141,7 +159,67 @@ export function getPhoto(photoId) {
 /**
  * Photo 업로드
  */
-export async function uploadPhoto() {
+export async function uploadPhoto(file, owner) {
+
+    // Photo 고유 ID 생성
+    const photoId = crypto.randomUUID();
+
+    // 파일 확장자
+    const extension = file.name.split(".").pop().toLowerCase();
+
+    // Storage 저장 경로
+    const storagePath = `photos/${photoId}.${extension}`;
+
+    console.log("Photo ID :", photoId);
+    console.log("Storage :", storagePath);
+
+    // Storage 참조 생성
+const storageRef = ref(storage, storagePath);
+
+// Firebase Storage 업로드
+await uploadBytes(storageRef, file);
+
+// 다운로드 URL
+const downloadURL = await getDownloadURL(storageRef);
+
+console.log("Download URL :", downloadURL);
+
+// Photo 객체 생성
+const photo = createPhoto({
+
+    photoId,
+
+    owner,
+
+    fileName: file.name,
+
+    fileSize: file.size,
+
+    mediaType: file.type.startsWith("video") ? "video" : "image",
+
+    originalUrl: downloadURL,
+
+    displayUrl: downloadURL,
+
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+
+});
+
+console.log(photo);
+
+// Firestore 저장
+// Firestore 저장
+await setDoc(
+    doc(db, "photos", photoId),
+    photo
+);
+
+// State 갱신
+addPhoto(photo);
+
+// 업로드된 Photo 반환
+return photo;
 
 }
 

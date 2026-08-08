@@ -4,8 +4,7 @@
 // ======================================================
 
 import {
-    createPhoto,
-    addPhoto
+    uploadPhoto
 } from "./photoService.js";
 
 // ======================================================
@@ -91,7 +90,7 @@ function updateSelectedPhotoCount() {
 // Upload
 // ======================================================
 
-function handleUpload() {
+async function handleUpload() {
 
     // 사진 선택 확인
     if (selectedFiles.length === 0) {
@@ -115,21 +114,11 @@ function handleUpload() {
 
     const memo = memoInput.value.trim();
 
-    selectedFiles.forEach(file => {
+    for (const file of selectedFiles) {
 
-        const photo = createPhoto({
+    await uploadPhoto(file, owner);
 
-            fileName: file.name,
-
-            owner,
-
-            memo
-
-        });
-
-        addPhoto(photo);
-
-    });
+}
 
     alert(`${selectedFiles.length}장의 사진이 추가되었습니다.`);
 
