@@ -15,10 +15,16 @@ import { initGallery } from "./gallery.js";
  */
 export async function initApp() {
 
+    console.log("initApp 시작");
+
     await loadPhotos();
+
+    console.log("loadPhotos 완료");
 
     initGallery();
 
     console.log("Travel Gallery V2 시작");
 
 }
+
+initApp();

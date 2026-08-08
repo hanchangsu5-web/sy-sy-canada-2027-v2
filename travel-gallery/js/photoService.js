@@ -24,7 +24,9 @@ import {
     deleteDoc,
     doc,
     setDoc,
-    serverTimestamp
+    serverTimestamp,
+    query,
+    orderBy
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 import {
@@ -74,21 +76,6 @@ memo: data.memo ?? "",
 location: data.location ?? null
 
     };
-
-}
-
-/**
- * Photo 목록 불러오기
- */
-export async function loadPhotos() {
-
-     // TODO: Firebase에서 Photo 데이터를 불러온다.
-
-    const photos = [];
-
-    setPhotos(photos);
-
-    return photos;
 
 }
 
@@ -220,6 +207,25 @@ addPhoto(photo);
 
 // 업로드된 Photo 반환
 return photo;
+
+}
+
+export async function loadPhotos() {
+
+    const q = query(
+        collection(db, "photos"),
+        orderBy("createdAt", "desc")
+    );
+
+    const snapshot = await getDocs(q);
+
+    const photos = snapshot.docs.map(doc => doc.data());
+
+    setPhotos(photos);
+
+    console.log(photos);
+
+    return photos;
 
 }
 

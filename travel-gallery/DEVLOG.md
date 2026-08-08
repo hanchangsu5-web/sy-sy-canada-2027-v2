@@ -223,3 +223,65 @@ Viewer 기본 구조 구현 완료.
 Gallery 기본 구조 구현 완료.
 Viewer와 연동 가능한 상태.
 다음 단계에서 Gallery 동작 확인 및 Viewer Toolbar 기능을 구현 예정.
+
+# 2026-08-08
+
+## Firebase 연동 완료
+
+### Firebase
+
+- Firebase 프로젝트 생성
+- Web App 등록
+- Cloud Firestore 생성
+- Firebase Storage 생성
+
+### 업로드 기능
+
+- uploadPhoto() 구현
+- Firebase Storage 업로드
+- Download URL 생성
+- Firestore 메타데이터 저장
+
+### 사진 불러오기
+
+- loadPhotos() 구현
+- Firestore photos 컬렉션 조회
+- createdAt 내림차순 정렬
+- Photo 배열 생성
+- state.setPhotos() 연동
+
+### Gallery
+
+- 앱 시작 시 loadPhotos() 실행
+- Firestore 데이터를 Gallery와 연결
+- Firebase에 저장된 사진이 Gallery에 정상 표시됨
+
+### 수정 사항
+
+- gallery.html CSS 경로 수정
+- gallery.html app.js 경로 수정
+- loadPhotos() 중복 선언 제거
+- initApp() 호출 추가
+
+### 확인 완료
+
+- ✅ 사진 업로드
+- ✅ Firebase Storage 저장
+- ✅ Firestore 메타데이터 저장
+- ✅ Firestore 조회
+- ✅ State 저장
+- ✅ Gallery 렌더링
+
+---
+
+## 다음 작업
+
+- width / height 저장
+- Viewer 연결
+- 사진 클릭 이벤트
+- 이전 / 다음 이동
+- 메모 표시
+- 즐겨찾기 기능
+- 삭제 기능
+- 정렬 기능
+- 세로 사진 UI 개선
