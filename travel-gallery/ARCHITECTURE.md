@@ -304,6 +304,40 @@ Viewer는 현재 선택된 Photo를 표시한다.
 
 기능을 담당한다.
 
+
+---
+
+### Viewer 설계 원칙
+
+- Viewer는 최초 한 번만 생성한다.
+- Viewer DOM은 삭제하지 않는다.
+- 화면 변경 시 DOM을 재생성하지 않고 내용만 갱신한다.
+- Viewer는 Photo 객체를 저장하지 않고 `currentPhotoId`만 관리한다.
+- 필요한 Photo 정보는 항상 State를 통해 조회한다.
+- 모든 화면 갱신은 `showPhoto()`를 통해 수행한다.
+- 다른 함수는 화면을 직접 수정하지 않고 상태(State)만 변경한다.
+- 즐겨찾기 변경은 State를 먼저 갱신하고 화면을 즉시 변경한다.
+- Firebase 저장은 백그라운드에서 처리하여 UI 반응 속도를 유지한다.
+
+### Viewer State
+
+Viewer는 별도의 전역변수를 사용하지 않고 State를 통해 상태를 관리한다.
+
+viewer
+- isOpen
+- currentPhotoId
+- zoom
+- rotation
+- translateX
+- translateY
+
+설계 원칙
+- Viewer는 Photo 객체를 저장하지 않는다.
+- Viewer는 currentPhotoId만 관리한다.
+- Photo 정보가 필요하면 항상 State에서 조회한다.
+- Viewer DOM은 한 번만 생성하며 삭제하지 않는다.
+- 상태(State)가 변경되면 Viewer의 DOM 내용만 갱신한다.
+
 ---
 
 # 9. Upload Engine

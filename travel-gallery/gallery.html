@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Travel Gallery</title>
+
+    <!-- Common -->
+    <link rel="stylesheet" href="../css/common.css">
+
+    <!-- Gallery -->
+    <link rel="stylesheet" href="../css/gallery.css">
+
+    <!-- Viewer -->
+    <link rel="stylesheet" href="../css/viewer.css">
+
+</head>
+
+<body>
+
+    <!-- ========================= -->
+    <!-- Header -->
+    <!-- ========================= -->
+
+    <header class="page-header">
+
+        <h1 class="page-title">
+            Travel Gallery
+        </h1>
+
+    </header>
+
+    <!-- ========================= -->
+    <!-- Main -->
+    <!-- ========================= -->
+
+    <main id="galleryPage">
+
+
+
+        <!-- ========================= -->
+        <!-- Gallery -->
+        <!-- ========================= -->
+
+        <section id="gallerySection">
+
+            <!-- Gallery Grid -->
+            <div id="galleryGrid">
+
+                <!--
+                    Photo Card는 gallery.js가
+                    동적으로 추가한다.
+                -->
+
+            </div>
+
+            <!-- Empty Message -->
+
+            <div id="emptyGallery" class="hidden">
+
+                <p>사진이 없습니다.</p>
+
+            </div>
+
+            <!-- Gallery Loading -->
+
+            <div id="galleryLoading" class="hidden">
+
+                <div class="spinner"></div>
+
+            </div>
+
+        </section>
+
+        <!-- ========================= -->
+        <!-- Viewer -->
+        <!-- ========================= -->
+
+        <section id="viewerOverlay" class="hidden">
+
+            <!-- Viewer Toolbar -->
+
+            <header id="viewerToolbar">
+
+                <button id="downloadButton" title="다운로드">
+                    ⬇
+                </button>
+
+                <button id="shareButton" title="공유">
+                    ↗
+                </button>
+
+                <button id="favoriteButton" title="즐겨찾기">
+                    ♥
+                </button>
+
+                <button id="infoButton" title="정보">
+                    ⓘ
+                </button>
+
+                <!-- 내 사진일 때만 표시 -->
+
+                <button id="deleteButton"
+                        class="hidden"
+                        title="삭제">
+                    🗑
+                </button>
+
+                <button id="closeViewerButton"
+                        title="닫기">
+                    ✕
+                </button>
+
+            </header>
+
+            <!-- Viewer Content -->
+
+            <div id="viewerContent">
+
+                <!-- Previous -->
+
+                <button id="previousButton"
+                        class="viewer-nav">
+                    ◀
+                </button>
+
+                <!-- Display Image -->
+
+                <img
+                    id="viewerImage"
+                    src=""
+                    alt="Travel Photo">
+
+                <!-- Next -->
+
+                <button id="nextButton"
+                        class="viewer-nav">
+                    ▶
+                </button>
+
+            </div>
+            <!-- ========================= -->
+            <!-- Information Panel -->
+            <!-- ========================= -->
+
+            <section id="informationPanel" class="hidden">
+
+                <div id="informationHandle"></div>
+
+                <div id="informationContent">
+
+                    <!--
+                        Photo Metadata
+
+                        촬영일
+                        위치
+                        메모
+                        기타 정보
+
+                        viewer.js가
+                        동적으로 표시한다.
+                    -->
+
+                </div>
+
+            </section>
+
+            <!-- ========================= -->
+            <!-- Viewer Loading -->
+            <!-- ========================= -->
+
+            <div id="viewerLoading" class="hidden">
+
+                <div class="spinner"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script type="module" src="../js/app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+/* ============================================================
+   Travel Gallery V2
+   Gallery CSS
+============================================================ */
+
+
+/* ============================================================
+   Gallery Page
+============================================================ */
+
+#galleryPage {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 100vh;
+
+    background: #f5f5f5;
+
+}
+
+
+/* ============================================================
+   Gallery Section
+============================================================ */
+
+#gallerySection {
+
+    flex: 1;
+
+    padding: 20px;
+
+}
+
+
+/* ============================================================
+   Gallery Grid
+============================================================ */
+
+#galleryGrid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+
+    gap: 16px;
+
+    align-content: start;
+
+}
+
+/* ============================================================
+   Photo Card
+============================================================ */
+
+.photo-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    contain: layout paint;
+
+    isolation: isolate;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+
+/* ============================================================
+   Photo Image Wrapper
+============================================================ */
+
+.photo-image-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+    background: #eeeeee;
+
+}
+
+
+/* ============================================================
+   Photo Image
+============================================================ */
+
+.photo-image {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+    touch-action: manipulation;
+
+}
+
+/* ============================================================
+   Photo Overlay
+============================================================ */
+
+.photo-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: flex-end;
+
+    padding: 12px;
+
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,.25),
+        rgba(0,0,0,0)
+    );
+
+    pointer-events: none;
+
+}
+
+
+
+/* ============================================================
+   Empty Gallery
+============================================================ */
+
+#emptyGallery {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 300px;
+
+    text-align: center;
+
+    color: #666666;
+
+    font-size: 18px;
+
+}
+
+
+
+/* ============================================================
+   Gallery Loading
+============================================================ */
+
+#galleryLoading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 300px;
+
+}
+
+/* ============================================================
+   Mobile
+============================================================ */
+
+@media (max-width: 768px) {
+
+    #gallerySection {
+
+        padding: 12px;
+
+    }
+
+    #galleryGrid {
+
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(140px, 1fr)
+        );
+
+        gap: 10px;
+
+    }
+
+}
+
+
+
+/* ============================================================
+   Desktop
+============================================================ */
+
+@media (min-width: 1200px) {
+
+    #galleryGrid {
+
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(220px, 1fr)
+        );
+
+        gap: 20px;
+
+    }
+
+}

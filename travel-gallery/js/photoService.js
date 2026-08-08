@@ -18,6 +18,7 @@ import { getState, setPhotos } from "./state.js";
 
 /**
  * Photo 객체 생성
+ * 기본값을 포함한 Photo 객체를 생성한다.
  */
 export function createPhoto(data = {}) {
 
@@ -43,10 +44,16 @@ export function createPhoto(data = {}) {
         updatedAt: data.updatedAt ?? "",
 
         // 사용자 정보
-        favorite: data.favorite ?? false,
+favorite: data.favorite ?? false,
 
-        // 위치
-        location: data.location ?? null
+// 업로드한 사용자
+owner: data.owner ?? "",
+
+// 메모
+memo: data.memo ?? "",
+
+// 위치
+location: data.location ?? null
 
     };
 

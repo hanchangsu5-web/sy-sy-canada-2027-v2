@@ -80,13 +80,6 @@ export function setPhotos(photos) {
 }
 
 /**
- * Photo 목록 저장
- */
-export function setPhotos(photos) {
-    state.photos = photos;
-}
-
-/**
  * 현재 선택된 사진 변경
  */
 export function setCurrentPhoto(photoId, index) {

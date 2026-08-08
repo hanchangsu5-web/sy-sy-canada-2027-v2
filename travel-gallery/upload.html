@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Travel Gallery - Upload</title>
+
+    <!-- Common -->
+    <link
+        rel="stylesheet"
+        href="css/common.css">
+
+    <link
+        rel="stylesheet"
+        href="css/layout.css">
+
+    <!-- Upload -->
+    <link
+        rel="stylesheet"
+        href="css/upload.css">
+
+</head>
+
+<body>
+
+    <!-- ============================================
+         Upload Page
+    ============================================= -->
+
+    <main id="uploadPage">
+
+        <div id="uploadContainer">
+
+            <header id="uploadHeader">
+
+                <h1>사진추가</h1>
+
+                <p>
+                    여행 사진을 선택하여
+                    갤러리에 추가합니다.
+                </p>
+
+            </header>
+
+            <!-- ============================================
+                 Upload Form
+            ============================================= -->
+
+            <form id="uploadForm">
+                <!-- 사진 선택 -->
+
+                <div class="form-group">
+
+                    <label for="photoInput">
+
+                        사진 선택
+
+                    </label>
+
+                    <input
+                        type="file"
+                        id="photoInput"
+                        accept="image/*"
+                        multiple
+                        required>
+
+                </div>
+
+                <!-- 선택된 사진 -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        선택된 사진
+
+                    </label>
+
+                    <p id="selectedPhotoCount">
+
+                        선택된 사진 : 0장
+
+                    </p>
+
+                </div>
+                
+                <!-- 작성자 -->
+
+                <div class="form-group">
+
+                    <label for="ownerSelect">
+
+                        작성자
+
+                    </label>
+
+                    <select id="ownerSelect" required>
+
+    <option value="" selected disabled>
+        작성자를 선택하세요.
+    </option>
+
+    <option value="창수">창수</option>
+    <option value="숙정">숙정</option>
+    <option value="영삼">영삼</option>
+    <option value="순정">순정</option>
+    <option value="세영">세영</option>
+    <option value="서윤">서윤</option>
+
+</select>
+
+                </div>
+
+                <!-- 공통 메모 -->
+
+                <div class="form-group">
+
+                    <label for="memoInput">
+
+                        공통 메모 (선택)
+
+                    </label>
+
+                    <textarea
+                        id="memoInput"
+                        rows="4"
+                        placeholder="예) 1일차 캘거리, 가족 저녁식사"></textarea>
+
+                </div>
+
+                <!-- 업로드 -->
+
+                <div class="form-group">
+
+                    <button
+                        id="uploadButton"
+                        type="button">
+
+                        사진추가
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <script
+        type="module"
+        src="js/upload.js"></script>
+
+</body>
+
+</html>

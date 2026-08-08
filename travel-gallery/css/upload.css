@@ -1,0 +1,195 @@
+/* ======================================================
+   Upload
+====================================================== */
+
+/* ======================================================
+   Container
+====================================================== */
+
+.upload-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px 40px;
+}
+
+/* ======================================================
+   Header
+====================================================== */
+
+.upload-header {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.upload-title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.upload-description {
+    margin-top: 8px;
+    color: #666;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* ======================================================
+   Upload Card
+====================================================== */
+
+.upload-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px;
+}
+
+/* ======================================================
+   Form
+====================================================== */
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333333;
+}
+
+/* ======================================================
+   Form Controls
+====================================================== */
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    box-sizing: border-box;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* ======================================================
+   Selected Photo Count
+====================================================== */
+
+.selected-photo-count {
+    font-size: 14px;
+    color: #666666;
+    font-weight: 500;
+}
+
+/* ======================================================
+   File Input
+====================================================== */
+
+.form-input[type="file"] {
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* ======================================================
+   Upload Button
+====================================================== */
+
+.upload-button {
+    width: 100%;
+    padding: 14px 20px;
+    margin-top: 8px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #2563eb;
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition:
+        background-color 0.2s,
+        transform 0.15s;
+}
+
+.upload-button:hover {
+    background-color: #1d4ed8;
+}
+
+.upload-button:active {
+    transform: scale(0.98);
+}
+
+.upload-button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* ======================================================
+   Spacing
+====================================================== */
+
+.form-group:last-of-type {
+    margin-bottom: 8px;
+}
+
+/* ======================================================
+   Responsive
+====================================================== */
+
+@media (max-width: 768px) {
+
+    .upload-container {
+        padding: 20px 12px 32px;
+    }
+
+    .upload-card {
+        padding: 20px 16px;
+    }
+
+    .upload-title {
+        font-size: 24px;
+    }
+
+    .upload-description {
+        font-size: 14px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea,
+    .upload-button {
+        font-size: 16px;
+    }
+
+}

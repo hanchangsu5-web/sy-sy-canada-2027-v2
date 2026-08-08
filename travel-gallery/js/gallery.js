@@ -8,6 +8,7 @@
  */
 
 import { getState } from "./state.js";
+import { openViewer } from "./viewer.js";
 
 /**
  * 갤러리 렌더링
@@ -18,9 +19,9 @@ export function renderGallery() {
 
     clearGallery();
 
-    for (const photo of state.photos) {
+    for (const [index, photo] of state.photos.entries()) {
 
-        const card = createPhotoCard(photo);
+        const card = createPhotoCard(photo, index);
 
         appendPhotoCard(card);
 
@@ -33,7 +34,7 @@ export function renderGallery() {
  */
 export function clearGallery() {
 
-    const gallery = document.getElementById("gallery");
+    const gallery = document.getElementById("galleryGrid");
 
     if (!gallery) return;
 
@@ -44,7 +45,7 @@ export function clearGallery() {
 /**
  * Photo Card 생성
  */
-export function createPhotoCard(photo) {
+export function createPhotoCard(photo, index) {
 
     const card = document.createElement("div");
 
@@ -68,7 +69,11 @@ wrapper.appendChild(image);
 card.appendChild(wrapper);
 card.appendChild(overlay);
 
-    return card;
+card.addEventListener("click", () => {
+    openViewer(photo.photoId, index);
+});
+
+return card;
 
 }
 
@@ -77,7 +82,7 @@ card.appendChild(overlay);
  */
 export function appendPhotoCard(card) {
 
-    const gallery = document.getElementById("gallery");
+    const gallery = document.getElementById("galleryGrid");
 
     if (!gallery) return;
 

@@ -160,3 +160,66 @@ State에 저장된 Photo 목록을 화면에 출력하는 Gallery 모듈의 기�
 ### 결과
 Gallery 모듈의 기본 구조를 완성했다.
 향후 즐겨찾기, 선택 모드, 메모, Virtual Scroll, 애니메이션 등의 기능은 현재 구조를 유지한 채 확장할 예정이다.
+
+## Viewer Engine (예정)
+
+- [ ] 3장 버퍼 방식 적용
+- [ ] 이전/현재/다음 이미지 유지
+- [ ] 프리로드(loader.js) 연동
+- [ ] 슬라이드 애니메이션 최적화
+- [ ] 깜박임 방지 점검
+
+## Viewer V1 완료
+
+### HTML
+- Viewer Overlay 구조 작성
+- Toolbar
+- Navigation
+- Information Panel
+- Loading 영역
+
+### CSS
+- Viewer Overlay 스타일
+- Toolbar
+- Navigation
+- Bottom Sheet
+- Responsive 적용
+
+### JS
+- Viewer 열기/닫기
+- Photo 표시
+- 이전/다음 사진
+- Viewer 새로고침
+- Toolbar 기본 이벤트 연결
+- Viewer 초기화
+
+### 완료
+Viewer 기본 구조 구현 완료.
+다음 단계에서 Toolbar 기능(다운로드, 공유, 즐겨찾기, 정보, 삭제)과 Gesture, Viewer Engine을 구현 예정.
+
+## Gallery V1 완료
+
+### HTML
+- Gallery Grid
+- Empty 화면
+- Loading 화면
+
+### CSS
+- Gallery Grid 레이아웃
+- Photo Card
+- Photo Image
+- Photo Overlay
+- Empty Gallery
+- Gallery Loading
+- Responsive 적용
+
+### JS
+- Gallery 렌더링
+- Photo Card 생성
+- Viewer 연결
+- Gallery 렌더링 구조 정리
+
+### 완료
+Gallery 기본 구조 구현 완료.
+Viewer와 연동 가능한 상태.
+다음 단계에서 Gallery 동작 확인 및 Viewer Toolbar 기능을 구현 예정.
