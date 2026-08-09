@@ -231,3 +231,92 @@
     }
 
 }
+
+/* ==========================================
+   Gallery Header (V2)
+========================================== */
+
+.gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.gallery-title {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222;
+    letter-spacing: -0.02em;
+}
+
+.gallery-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: -42px;
+    margin-bottom: 20px;
+}
+
+.gallery-option {
+    display: flex;
+    align-items: center;
+}
+
+.gallery-option label {
+    font-size: 0.9rem;
+    color: #666;
+    white-space: nowrap;
+}
+
+.gallery-option select {
+    min-width: 120px;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid #d8d8d8;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #444;
+    cursor: pointer;
+}
+
+.gallery-option select:hover {
+    border-color: #999;
+}
+
+.gallery-option select:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 0 3px rgba(66,133,244,.15);
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .gallery-header {
+        align-items: flex-start;
+    }
+
+    .gallery-toolbar {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .gallery-option {
+        flex: 1;
+    }
+
+    .gallery-option select {
+        width: 100%;
+        min-width: 0;
+    }
+
+}

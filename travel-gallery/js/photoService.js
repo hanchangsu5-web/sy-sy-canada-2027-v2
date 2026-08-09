@@ -144,9 +144,37 @@ export function getPhoto(photoId) {
 }
 
 /**
+ * 이미지 크기 읽기
+ */
+async function getImageSize(file) {
+
+    return new Promise((resolve, reject) => {
+
+        const img = new Image();
+
+        img.onload = () => {
+
+            resolve({
+                width: img.naturalWidth,
+                height: img.naturalHeight
+            });
+
+            URL.revokeObjectURL(img.src);
+
+        };
+
+        img.onerror = reject;
+
+        img.src = URL.createObjectURL(file);
+
+    });
+
+}
+
+/**
  * Photo 업로드
  */
-export async function uploadPhoto(file, owner) {
+export async function uploadPhoto(file, owner, memo) {
 
     // Photo 고유 ID 생성
     const photoId = crypto.randomUUID();
@@ -159,6 +187,9 @@ export async function uploadPhoto(file, owner) {
 
     console.log("Photo ID :", photoId);
     console.log("Storage :", storagePath);
+    
+    // 이미지 크기 읽기
+const { width, height } = await getImageSize(file);
 
     // Storage 참조 생성
 const storageRef = ref(storage, storagePath);
@@ -178,6 +209,8 @@ const photo = createPhoto({
 
     owner,
 
+    memo,
+
     fileName: file.name,
 
     fileSize: file.size,
@@ -186,10 +219,13 @@ const photo = createPhoto({
 
     originalUrl: downloadURL,
 
-    displayUrl: downloadURL,
+displayUrl: downloadURL,
 
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp()
+width,
+height,
+
+createdAt: serverTimestamp(),
+updatedAt: serverTimestamp()
 
 });
 
@@ -230,9 +266,89 @@ export async function loadPhotos() {
 }
 
 /**
+ * Photo 메모 저장
+ */
+export async function updatePhotoMemo(photoId, memo) {
+
+    await updateDoc(
+        doc(db, "photos", photoId),
+        {
+            memo,
+            updatedAt: serverTimestamp()
+        }
+    );
+
+    const photo = getPhoto(photoId);
+
+    if (!photo) {
+        return;
+    }
+
+    updatePhoto({
+
+        ...photo,
+
+        memo,
+
+        updatedAt: new Date()
+
+    });
+
+}
+
+/**
+ * Photo 즐겨찾기 저장
+ */
+export async function updatePhotoFavorite(photoId, favorite) {
+
+    await updateDoc(
+        doc(db, "photos", photoId),
+        {
+            favorite,
+            updatedAt: serverTimestamp()
+        }
+    );
+
+    const photo = getPhoto(photoId);
+
+    if (!photo) {
+        return;
+    }
+
+    updatePhoto({
+
+        ...photo,
+
+        favorite,
+
+        updatedAt: new Date()
+
+    });
+
+}
+
+/**
  * Photo 삭제
  */
-export async function deletePhoto() {
+export async function deletePhoto(photoId) {
+
+    const photo = getPhoto(photoId);
+
+    if (!photo) {
+        return;
+    }
+
+    const extension = photo.fileName.split(".").pop().toLowerCase();
+    const storageRef = ref(storage, `photos/${photoId}.${extension}`
+);
+
+    await deleteObject(storageRef);
+
+    await deleteDoc(
+        doc(db, "photos", photoId)
+    );
+
+    removePhoto(photoId);
 
 }
 

@@ -9,6 +9,7 @@
 
 import { loadPhotos } from "./photoService.js";
 import { initGallery } from "./gallery.js";
+import { initViewer } from "./viewer.js";
 
 /**
  * 앱 시작
@@ -22,6 +23,8 @@ export async function initApp() {
     console.log("loadPhotos 완료");
 
     initGallery();
+
+    initViewer();
 
     console.log("Travel Gallery V2 시작");
 

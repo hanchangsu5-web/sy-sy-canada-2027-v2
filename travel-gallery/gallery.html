@@ -17,6 +17,10 @@
     <!-- Viewer -->
     <link rel="stylesheet" href="css/viewer.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -27,9 +31,57 @@
 
     <header class="page-header">
 
-        <h1 class="page-title">
-            Travel Gallery
-        </h1>
+    <h1 class="gallery-title">
+        Gallery
+    </h1>
+
+</header>
+
+<div class="gallery-toolbar">
+
+    <div class="gallery-option">
+
+    <select id="viewMode">
+
+        <option value="all" selected>
+            전체 사진
+        </option>
+
+        <option value="favorite">
+            즐겨찾기
+        </option>
+
+    </select>
+
+</div>
+
+    <div class="gallery-option">
+
+    <select id="sortMode">
+
+        <option value="takenDesc" selected>
+            촬영일 최신순
+        </option>
+
+        <option value="takenAsc">
+            촬영일 오래된순
+        </option>
+
+        <option value="uploadDesc">
+            업로드순
+        </option>
+
+        <option value="owner">
+            업로드한 사람
+        </option>
+
+    </select>
+
+</div>
+
+</div>
+
+        </div>
 
     </header>
 
@@ -38,8 +90,6 @@
     <!-- ========================= -->
 
     <main id="galleryPage">
-
-
 
         <!-- ========================= -->
         <!-- Gallery -->
@@ -120,21 +170,15 @@
 
             <div id="viewerContent">
 
-                <!-- Previous -->
-
                 <button id="previousButton"
                         class="viewer-nav">
                     ◀
                 </button>
 
-                <!-- Display Image -->
-
                 <img
                     id="viewerImage"
                     src=""
                     alt="Travel Photo">
-
-                <!-- Next -->
 
                 <button id="nextButton"
                         class="viewer-nav">
@@ -142,6 +186,7 @@
                 </button>
 
             </div>
+
             <!-- ========================= -->
             <!-- Information Panel -->
             <!-- ========================= -->
@@ -152,17 +197,52 @@
 
                 <div id="informationContent">
 
-                    <!--
-                        Photo Metadata
+                    <div class="information-row">
+                        <div class="information-label">파일명</div>
+                        <div id="informationFileName"></div>
+                    </div>
 
-                        촬영일
-                        위치
-                        메모
-                        기타 정보
+                    <div class="information-row">
+                        <div class="information-label">작성자</div>
+                        <div id="informationOwner"></div>
+                    </div>
 
-                        viewer.js가
-                        동적으로 표시한다.
-                    -->
+                    <div class="information-row">
+                        <div class="information-label">해상도</div>
+                        <div id="informationResolution"></div>
+                    </div>
+
+                    <div class="information-row">
+                        <div class="information-label">파일크기</div>
+                        <div id="informationFileSize"></div>
+                    </div>
+
+                    <div class="information-row">
+
+                        <div class="information-label">메모</div>
+
+                        <textarea
+                            id="informationMemo"
+                            rows="4"
+                            placeholder="메모를 입력하세요."></textarea>
+
+                        <div class="information-counter">
+
+                            <span id="memoLength">0</span>
+
+                            /5000
+
+                        </div>
+
+                    </div>
+
+                    <div class="information-actions">
+
+                        <button id="saveMemoButton">
+                            저장
+                        </button>
+
+                    </div>
 
                 </div>
 

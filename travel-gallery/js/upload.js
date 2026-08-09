@@ -114,9 +114,11 @@ async function handleUpload() {
 
     const memo = memoInput.value.trim();
 
+    console.log("memo =", memo);
+
     for (const file of selectedFiles) {
 
-    await uploadPhoto(file, owner);
+    await uploadPhoto(file, owner, memo);
 
 }
 
