@@ -10,29 +10,163 @@
 import { getState } from "./state.js";
 import { openViewer } from "./viewer.js";
 
-/**
- * 갤러리 렌더링
- */
 export function renderGallery() {
 
     const state = getState();
 
     clearGallery();
 
-    const viewMode = document.getElementById("viewMode")?.value ?? "all";
+    const gallery = document.getElementById("galleryGrid");
 
-const photos =
-    viewMode === "favorite"
-        ? state.photos.filter(photo => photo.favorite)
-        : state.photos;
+    const viewMode =
+        document.getElementById("viewMode")?.value ?? "all";
 
-for (const [index, photo] of photos.entries()) {
+    const sortMode =
+        document.getElementById("sortMode")?.value ?? "takenDesc";
 
-    const card = createPhotoCard(photo, index);
+    let photos =
+        viewMode === "favorite"
+            ? state.photos.filter(photo => photo.favorite)
+            : [...state.photos];
 
-    appendPhotoCard(card);
+    switch (sortMode) {
 
-}
+        case "takenAsc":
+
+            photos.sort((a, b) => {
+
+                const dateA = a.createdAt?.seconds
+                    ? a.createdAt.seconds
+                    : new Date(a.createdAt).getTime();
+
+                const dateB = b.createdAt?.seconds
+                    ? b.createdAt.seconds
+                    : new Date(b.createdAt).getTime();
+
+                return dateA - dateB;
+
+            });
+
+            break;
+
+        case "owner":
+
+            photos.sort((a, b) => {
+
+                const ownerCompare =
+                    (a.owner ?? "").localeCompare(
+                        b.owner ?? "",
+                        "ko"
+                    );
+
+                if (ownerCompare !== 0) {
+                    return ownerCompare;
+                }
+
+                const dateA = a.createdAt?.seconds
+                    ? a.createdAt.seconds
+                    : new Date(a.createdAt).getTime();
+
+                const dateB = b.createdAt?.seconds
+                    ? b.createdAt.seconds
+                    : new Date(b.createdAt).getTime();
+
+                return dateB - dateA;
+
+            });
+
+            break;
+
+        case "takenDesc":
+
+        default:
+
+            photos.sort((a, b) => {
+
+                const dateA = a.createdAt?.seconds
+                    ? a.createdAt.seconds
+                    : new Date(a.createdAt).getTime();
+
+                const dateB = b.createdAt?.seconds
+                    ? b.createdAt.seconds
+                    : new Date(b.createdAt).getTime();
+
+                return dateB - dateA;
+
+            });
+
+            break;
+
+    }
+
+    let previousHeader = "";
+
+    for (const [index, photo] of photos.entries()) {
+
+        // 사람별 헤더
+        if (sortMode === "owner") {
+
+            const owner = photo.owner ?? "알 수 없음";
+
+            if (owner !== previousHeader) {
+
+                const header = document.createElement("div");
+
+                header.className = "gallery-date-header";
+
+                header.textContent = `👤 ${owner}`;
+
+                gallery.appendChild(header);
+
+                previousHeader = owner;
+
+            }
+
+        } else {
+
+            const createdAt = photo.createdAt?.seconds
+                ? new Date(photo.createdAt.seconds * 1000)
+                : new Date(photo.createdAt);
+
+            const weekNames = [
+                "일",
+                "월",
+                "화",
+                "수",
+                "목",
+                "금",
+                "토"
+            ];
+
+            const year = createdAt.getFullYear();
+            const month = String(createdAt.getMonth() + 1).padStart(2, "0");
+            const day = String(createdAt.getDate()).padStart(2, "0");
+            const week = weekNames[createdAt.getDay()];
+
+            const dateText =
+                `${year}.${month}.${day} (${week})`;
+
+            if (dateText !== previousHeader) {
+
+                const header = document.createElement("div");
+
+                header.className = "gallery-date-header";
+
+                header.textContent = dateText;
+
+                gallery.appendChild(header);
+
+                previousHeader = dateText;
+
+            }
+
+        }
+
+        const card = createPhotoCard(photo, index);
+
+        appendPhotoCard(card);
+
+    }
 
 }
 
@@ -112,10 +246,10 @@ export function refreshGallery() {
 export function initGallery() {
 
     const viewMode = document.getElementById("viewMode");
+    const sortMode = document.getElementById("sortMode");
 
     if (viewMode) {
 
-        // 저장된 보기 모드 복원
         const savedViewMode =
             localStorage.getItem("galleryViewMode");
 
@@ -123,19 +257,24 @@ export function initGallery() {
             viewMode.value = savedViewMode;
         }
 
-        // 보기 변경 시 저장 후 갱신
-        viewMode.addEventListener(
+        viewMode.addEventListener("change", () => {
+
+            localStorage.setItem(
+                "galleryViewMode",
+                viewMode.value
+            );
+
+            refreshGallery();
+
+        });
+
+    }
+
+    if (sortMode) {
+
+        sortMode.addEventListener(
             "change",
-            () => {
-
-                localStorage.setItem(
-                    "galleryViewMode",
-                    viewMode.value
-                );
-
-                refreshGallery();
-
-            }
+            refreshGallery
         );
 
     }

@@ -39,7 +39,7 @@
 
             <header id="uploadHeader">
 
-                <h1>사진추가</h1>
+                <h1>📷 사진 추가</h1>
 
                 <p>
                     여행 사진을 선택하여
@@ -55,40 +55,43 @@
             <form id="uploadForm">
                 <!-- 사진 선택 -->
 
-                <div class="form-group">
+                
 
-                    <label for="photoInput">
+<div class="form-group">
 
-                        사진 선택
+    <label>
 
-                    </label>
+        📷 사진 선택
 
-                    <input
-                        type="file"
-                        id="photoInput"
-                        accept="image/*"
-                        multiple
-                        required>
+    </label>
 
-                </div>
+    <div class="file-picker">
 
-                <!-- 선택된 사진 -->
+        <input
+            type="file"
+            id="photoInput"
+            accept="image/*"
+            multiple
+            required
+            hidden>
 
-                <div class="form-group">
+        <button
+            type="button"
+            id="selectPhotoButton">
 
-                    <label>
+            📁 사진 선택
 
-                        선택된 사진
+        </button>
 
-                    </label>
+        <span id="selectedPhotoCount">
 
-                    <p id="selectedPhotoCount">
+            📷 0장 선택됨
 
-                        선택된 사진 : 0장
+        </span>
 
-                    </p>
+    </div>
 
-                </div>
+</div>
                 
                 <!-- 작성자 -->
 
@@ -142,7 +145,7 @@
                         id="uploadButton"
                         type="button">
 
-                        사진추가
+                        📤 사진 추가
 
                     </button>
 

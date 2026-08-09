@@ -3,15 +3,15 @@
 // upload.js
 // ======================================================
 
-import {
-    uploadPhoto
-} from "./photoService.js";
+import {uploadPhoto} from "./photoService.js";
 
 // ======================================================
 // DOM
 // ======================================================
 
 const photoInput = document.getElementById("photoInput");
+
+const selectPhotoButton = document.getElementById("selectPhotoButton");
 
 const selectedPhotoCount = document.getElementById("selectedPhotoCount");
 
@@ -27,6 +27,8 @@ const uploadButton = document.getElementById("uploadButton");
 
 let selectedFiles = [];
 
+const LAST_OWNER_KEY = "travel-gallery-last-owner";
+
 // ======================================================
 // Initialize
 // ======================================================
@@ -41,6 +43,13 @@ function initUpload() {
 
     bindEvents();
 
+    const lastOwner =
+        localStorage.getItem(LAST_OWNER_KEY);
+
+    if (lastOwner) {
+        ownerSelect.value = lastOwner;
+    }
+
 }
 
 // ======================================================
@@ -50,14 +59,23 @@ function initUpload() {
 function bindEvents() {
 
     photoInput.addEventListener(
-        "change",
-        handleFileSelection
-    );
+    "change",
+    handleFileSelection
+);
 
-    uploadButton.addEventListener(
-        "click",
-        handleUpload
-    );
+selectPhotoButton.addEventListener(
+    "click",
+    () => {
+
+        photoInput.click();
+
+    }
+);
+
+uploadButton.addEventListener(
+    "click",
+    handleUpload
+);
 
 }
 
@@ -82,7 +100,7 @@ function updateSelectedPhotoCount() {
     const count = selectedFiles.length;
 
     selectedPhotoCount.textContent =
-        `선택된 사진 : ${count}장`;
+    `📷 ${count}장 선택됨`;
 
 }
 
@@ -112,9 +130,9 @@ async function handleUpload() {
 
     const owner = ownerSelect.value;
 
-    const memo = memoInput.value.trim();
+    localStorage.setItem(LAST_OWNER_KEY,owner);
 
-    console.log("memo =", memo);
+    const memo = memoInput.value.trim();
 
     for (const file of selectedFiles) {
 
@@ -139,7 +157,10 @@ function resetUploadForm() {
     photoInput.value = "";
 
     // 작성자 초기화
-    ownerSelect.selectedIndex = 0;
+    const lastOwner =
+    localStorage.getItem(LAST_OWNER_KEY);
+
+ownerSelect.value = lastOwner ?? "";
 
     // 메모 초기화
     memoInput.value = "";
