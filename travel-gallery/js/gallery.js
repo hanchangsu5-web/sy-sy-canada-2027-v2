@@ -19,13 +19,20 @@ export function renderGallery() {
 
     clearGallery();
 
-    for (const [index, photo] of state.photos.entries()) {
+    const viewMode = document.getElementById("viewMode")?.value ?? "all";
 
-        const card = createPhotoCard(photo, index);
+const photos =
+    viewMode === "favorite"
+        ? state.photos.filter(photo => photo.favorite)
+        : state.photos;
 
-        appendPhotoCard(card);
+for (const [index, photo] of photos.entries()) {
 
-    }
+    const card = createPhotoCard(photo, index);
+
+    appendPhotoCard(card);
+
+}
 
 }
 
@@ -103,6 +110,35 @@ export function refreshGallery() {
  * Gallery 초기화
  */
 export function initGallery() {
+
+    const viewMode = document.getElementById("viewMode");
+
+    if (viewMode) {
+
+        // 저장된 보기 모드 복원
+        const savedViewMode =
+            localStorage.getItem("galleryViewMode");
+
+        if (savedViewMode) {
+            viewMode.value = savedViewMode;
+        }
+
+        // 보기 변경 시 저장 후 갱신
+        viewMode.addEventListener(
+            "change",
+            () => {
+
+                localStorage.setItem(
+                    "galleryViewMode",
+                    viewMode.value
+                );
+
+                refreshGallery();
+
+            }
+        );
+
+    }
 
     renderGallery();
 

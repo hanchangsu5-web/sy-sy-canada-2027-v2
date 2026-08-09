@@ -246,7 +246,21 @@ async function toggleFavorite() {
         favorite
     );
 
-    
+    photo.favorite = favorite;
+
+    updateFavoriteButton(photo);
+
+    refreshGallery();
+
+    const viewMode =
+        document.getElementById("viewMode")?.value;
+
+    if (viewMode === "favorite" && !favorite) {
+
+        closeViewer();
+
+    }
+
 }
 
 /**
