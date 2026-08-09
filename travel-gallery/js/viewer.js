@@ -14,6 +14,7 @@ const informationMemo = document.getElementById("informationMemo");
 const saveMemoButton = document.getElementById("saveMemoButton");
 const deleteButton = document.getElementById("deleteButton");
 const favoriteButton = document.getElementById("favoriteButton");
+//const openGoogleMapButton = document.getElementById("openGoogleMapButton");
 const memoLength = document.getElementById("memoLength");
 
 const viewerOverlay = document.getElementById("viewerOverlay");
@@ -263,6 +264,31 @@ async function toggleFavorite() {
 
 }
 
+function openGoogleMap() {
+
+    const state = getState();
+
+    const photo = getPhoto(state.currentPhotoId);
+
+    if (!photo) {
+        return;
+    }
+
+    if (!photo.latitude || !photo.longitude) {
+
+        alert("위치 정보가 없습니다.");
+
+        return;
+
+    }
+
+    window.open(
+        `https://www.google.com/maps?q=${photo.latitude},${photo.longitude}`,
+        "_blank"
+    );
+
+}
+
 /**
  * Toolbar 이벤트 연결
  */
@@ -280,6 +306,7 @@ function bindToolbarEvents() {
         );
     }
 
+    
     if (closeButton) {
         closeButton.addEventListener(
             "click",
